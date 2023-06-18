@@ -12,4 +12,4 @@ check_strings = [
 ]
 
 
-print(main_string in check_strings) # Should return True before & after the refactor
+print(main_string in check_strings)  # Should return True before & after the refactor

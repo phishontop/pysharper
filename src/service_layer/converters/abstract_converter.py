@@ -8,8 +8,15 @@ class AbstractConverter(ABC):
     """
 
     @abstractmethod
-    def _convert(self) -> str:
+    def _convert(self):
         raise NotImplementedError
 
-    def convert(self) -> str:
+    def convert(self):
         return self._convert()
+
+
+class IfStatementConverterMethod(AbstractConverter, ABC):
+    """
+    Abstract base class for if statement converter methods
+    This is implemented in the strategy pattern to help abstract the task
+    """

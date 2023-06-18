@@ -1,11 +1,11 @@
 # Pysharper
-All in one python resharper for python, used to fix code smells and increase your codes speed. This is still being developed on currently.
+All in one python resharper, used to fix code smells and increase your code's speed. This is still being developed on currently.
 
 ## Software Architecture Used
 Pysharper uses n-tier architecture and multiple different patterns including domain driven design (DDD).
 
 ## Features
-Pysharper's features range from changing dictionaries to classes if it can to changing lists to tuples if the object has never been appended to. Pysharper also helps save less RAM and fix loads of errors for you in seconds.
+Pysharper's features range from changing dictionaries to classes, convert lists to tuples if the object has never been appended to. Pysharper also helps save less RAM and fix errors that IDEs do not pick up on.
 
 ## CLI Entrypoint
 ```bash

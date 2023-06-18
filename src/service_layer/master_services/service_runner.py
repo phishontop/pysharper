@@ -1,8 +1,18 @@
 from typing import List, Type
 
-from src.service_layer.checkers import list_to_tuple_checker, abstract_checker
+from src.service_layer.checkers import (
+    list_to_tuple_checker,
+    abstract_checker,
+    if_statement_checker
+)
 from src.service_layer.uow import file_uow
 from src.domain.commands import refactor
+
+
+checkers: List[Type[abstract_checker.AbstractChecker]] = [
+    list_to_tuple_checker.ListToTupleChecker,
+    if_statement_checker.IfStatementChecker
+]
 
 
 class MasterServiceRunner:
@@ -24,11 +34,6 @@ class MasterServiceRunner:
 
     def run_checkers(self):
         code = self.get_input_code()
-
-        checkers: List[Type[abstract_checker.AbstractChecker]] = [
-            list_to_tuple_checker.ListToTupleChecker
-        ]
-
         for checker in checkers:
             checker_object = checker(code)
             checker_object.run_checks()

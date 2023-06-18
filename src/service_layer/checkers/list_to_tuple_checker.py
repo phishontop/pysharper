@@ -6,6 +6,7 @@ from src.service_layer.finders.list_finder import ListFinder
 class ListToTupleChecker(AbstractChecker):
 
     def __init__(self, text: str):
+        super().__init__(text=text)
         self.old_text = text
         self.new_text = text
 
