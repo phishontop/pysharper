@@ -40,7 +40,7 @@ class ConditionConverter(AbstractConverter):
 
     def _convert(self) -> str:
         for method in converter_methods:
-            method_object = method(self.condition)
+            method_object = method(self.condition.strip())
             new_condition = method_object.convert()
             if new_condition != self.condition:
                 self.condition = new_condition
@@ -51,7 +51,7 @@ class ConditionConverter(AbstractConverter):
 class EmptyString(IfStatementConverterMethod):
 
     def __init__(self, statement: str):
-        self.statement = statement.strip()
+        self.statement = statement
 
     def _convert(self) -> str:
         pattern = r"(\w+)\s*==\s*(['\"]{2})"
@@ -65,6 +65,19 @@ class EmptyString(IfStatementConverterMethod):
         return self.statement
 
 
+class LenEmptyDataType(IfStatementConverterMethod):
+
+    def __init__(self, statement: str):
+        self.statement = statement
+
+    def _convert(self):
+        pattern = r"len\((\w+)\) > 0"
+        error = re.search(pattern, self.statement)
+        if error is not None:
+            return error.group(1)
+
+
 converter_methods = (
     EmptyString,
+    LenEmptyDataType
 )
