@@ -18,7 +18,6 @@ class IfStatementChecker(AbstractChecker):
         for if_statement in if_statements_found:
             converter = IfStatementConverter(copy.copy(if_statement))
             new_if_statement = converter.convert()
-
             self.new_text = self.new_text.replace(
                 if_statement.line,
                 new_if_statement.line

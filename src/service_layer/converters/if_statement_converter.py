@@ -65,19 +65,43 @@ class EmptyString(IfStatementConverterMethod):
         return self.statement
 
 
-class LenEmptyDataType(IfStatementConverterMethod):
+class LenDataType(IfStatementConverterMethod):
 
     def __init__(self, statement: str):
         self.statement = statement
 
     def _convert(self):
-        pattern = r"len\((\w+)\) > 0"
-        error = re.search(pattern, self.statement)
-        if error is not None:
-            return error.group(1)
+        methods = ((">", ""), ("==", "not "))
+        for method in methods:
+            pattern = rf"len\((\w+)\) {method[0]} 0"
+            error = re.search(pattern, self.statement)
+            if error is not None:
+                return method[1] + error.group(1)
+
+        return self.statement
+
+
+class BoolValueConverter(IfStatementConverterMethod):
+
+    def __init__(self, statement: str):
+        self.statement = statement
+
+    def _convert(self):
+        pattern = r"== (False|True)$"
+        match = re.search(pattern, self.statement)
+
+        if match is not None:
+            value = match.group(1)
+            self.statement = re.sub(pattern, "", self.statement)
+
+            if value == "False":
+                self.statement = f"not {self.statement}"
+
+        return self.statement.strip()
 
 
 converter_methods = (
     EmptyString,
-    LenEmptyDataType
+    LenDataType,
+    BoolValueConverter
 )

@@ -7,3 +7,11 @@ if names:
 
 else:
     print("names list is empty")
+
+age = False
+
+if not age:
+    print("age is false")
+
+elif age:
+    print("age is true")
