@@ -1,0 +1,45 @@
+from setuptools import setup
+
+
+setup(
+    name="pysharper",
+    version="1.0.0",
+    description="A tool to fix and refactor python code",
+    long_description="",
+    long_description_content_type="text/markdown",
+    author="phish",
+    author_email="phishontop42@gmail.com",
+    url="https://github.com/phishontop/pysharper",
+    packages=["pysharper"],
+    package_data={"": ["LICENSE", "NOTICE"]},
+    package_dir={"requests": "requests"},
+    include_package_data=True,
+    python_requires=">=3.7",
+    install_requires=[],
+    license="",
+    zip_safe=False,
+    classifiers=[
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Web Environment",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: Apache Software License",
+        "Natural Language :: English",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Software Development :: Libraries",
+    ],
+    tests_require=[],
+    project_urls={
+        "Source": "https://github.com/phishontop/pysharper"
+    },
+)
