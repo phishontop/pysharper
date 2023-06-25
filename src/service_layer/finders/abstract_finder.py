@@ -17,3 +17,7 @@ class AbstractDataStructureFinder(AbstractFinder, ABC):
 
 class AbstractBuiltinFinder(AbstractFinder, ABC):
     """Abstract base class for builtin finders eg: if statements"""
+
+
+class AbstractLibraryFinder(AbstractFinder, ABC):
+    """Abstract base class for popular library finding for example requests"""

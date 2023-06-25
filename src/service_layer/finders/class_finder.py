@@ -10,6 +10,7 @@ class ClassFinder(AbstractBuiltinFinder):
         self.text = text
 
     def _run_finder(self):
+        # noinspection SpellCheckingInspection
         pattern = r"class\s+(\w+):\s*(.*?)\n\s*def\s+(\w+)\((.*?)\):([\s\S]*?)(?=\nclass|\Z)"
         class_names = [class_found.group(1) for class_found in re.finditer(pattern, self.text)]
         class_list = []
