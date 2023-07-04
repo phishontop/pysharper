@@ -1,4 +1,4 @@
-from src.service_layer.converters.abstract_converter import AbstractConverter, HttpclientConverterMethod
+from src.service_layer.converters.abstract_converter import AbstractConverter
 from src.domain.models import request_models
 from typing import List, Dict, Tuple
 
@@ -11,22 +11,39 @@ def find_indent(words: str, sub_word: str) -> str:
     return ""
 
 
-class GetRequestConverter(HttpclientConverterMethod):
+def get_request_converter(
+    client_variable: str,
+    request_object: request_models.Request
+) -> str:
+    args = ", ".join([
+        f'"GET"',
+        f'"{request_object.path}"',
+        f"headers={request_object.args['headers']}"
+    ])
 
-    def __init__(
-        self,
-        client_variable: str,
-        request_object: request_models.Request
-    ):
-        self.client_variable = client_variable
-        self.request_object = request_object
+    return f"{client_variable}.request({args})"
 
-    def _convert(self):
-        return f"""{self.client_variable}.{self.convert_to_get_request()}"""
+
+def payload_request_converter(
+    client_variable: str,
+    request_object: request_models.Request
+) -> str:
+    args = ", ".join([
+        f'"{request_object.method.upper()}"',
+        f'"{request_object.path}"',
+        f"body={request_object.args['body']}"
+        f"headers={request_object.args['headers']}"
+    ])
+
+    return f"{client_variable}.request({args})"
 
 
 converter_table = {
-    "get": GetRequestConverter
+    "get": get_request_converter,
+    "post": payload_request_converter,
+    "put": payload_request_converter,
+    "patch": payload_request_converter,
+    "delete": payload_request_converter
 }
 
 
@@ -50,13 +67,10 @@ class RequestToHttpclientConverter(AbstractConverter):
     def _convert(self):
         converter_method = converter_table[self.request_object.method]
 
-        converter_object = converter_method(
+        return converter_method(
             client_variable=self.variable,
             request_object=self.request_object
         )
-
-        request_code = converter_object.convert()
-        return request_code
 
     def add_to_text(self, text: str):
         """Replaces the request_object value to the convert func result"""
