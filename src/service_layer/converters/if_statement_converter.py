@@ -8,6 +8,11 @@ from src.service_layer.converters.abstract_converter import (
     IfStatementConverterMethod
 )
 
+eq_reverse_table = {
+    "!=": "==",
+    "==": "!="
+}
+
 
 class IfStatementConverter(AbstractConverter):
     """
@@ -100,8 +105,27 @@ class BoolValueConverter(IfStatementConverterMethod):
         return self.statement.strip()
 
 
+class BoolEqualConverter(IfStatementConverterMethod):
+
+    def __init__(self, statement: str):
+        self.statement = statement
+
+    def _convert(self):
+        split_statement = self.statement.split()
+        if (
+            len(split_statement) == 4 and
+            split_statement[0] == "not" and
+            split_statement[2] in eq_reverse_table
+        ):
+            split_statement[2] = eq_reverse_table[split_statement[2]]
+            split_statement.pop(0)
+
+        return " ".join(split_statement)
+
+
 converter_methods = (
     EmptyString,
     LenDataType,
-    BoolValueConverter
+    BoolValueConverter,
+    BoolEqualConverter
 )
